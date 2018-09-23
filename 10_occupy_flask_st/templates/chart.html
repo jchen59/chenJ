@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Occupations </title>
+    </head>
+    <body>
+        <table>
+            {% for job in coll %}
+            <tr>
+                <td> {{job}} </td>
+                <td> {{coll[job]}} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
