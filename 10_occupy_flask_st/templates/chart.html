@@ -1,16 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-    <head>
-        <title> Occupations </title>
-    </head>
-    <body>
-        <table>
-            {% for job in coll %}
-            <tr>
-                <td> {{job}} </td>
-                <td> {{coll[job]}} </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </body>
+  <head>
+    <title>Occupations</title>
+    <h1> Occupations in the United States </h1>
+    <style>
+        table, th, td {
+           width: 75%;
+           margin: auto;
+        }
+        th, td{
+          border: 1px solid black;
+          text-align: center;
+          height: 30px;
+          font-size: 20px;
+        }
+        h1{
+          text-align: center;
+          color: blue;
+        }
+        h3{
+          border: 1px solid black;
+          width: 50%;
+        }
+    </style>
+  </head>
+
+  <body>
+    <h3> Random Occupation: {{rand}}</h3>
+    <table>
+      <tr>
+        <th>Job Class</th>
+        <th>Percentage</th>
+        <th>Start your career</th>
+      </tr>
+      {%  for key, value in dict|dictsort %}
+      <tr>
+        <td>{{ key }}</td>
+        <td>{{ value[0] }}</td>
+        <td><a href= {{ value[1] }} >here</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
 </html>
