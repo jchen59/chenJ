@@ -4,6 +4,7 @@
   <head>
     <title>Occupations</title>
     <h1> Occupations in the United States </h1>
+    <!-- Formatting the table -->
     <style>
         table, th, td {
            width: 75%;
@@ -27,17 +28,20 @@
   </head>
 
   <body>
-    <h3> Random Occupation: {{rand}}</h3>
+    <center> <h3> Random Occupation: {{rand}}</h3> </center>
+    <center> <h4> A chart about occupations and the percent of people working in each respective field (courtesy of Mr. Brooks) </h4> </center>
     <table>
       <tr>
         <th>Job Class</th>
         <th>Percentage</th>
         <th>Start your career</th>
       </tr>
+      <!-- Loop through a sorted dictionary -->
       {%  for key, value in dict|dictsort %}
       <tr>
         <td>{{ key }}</td>
-        <td>{{ value[0] }}</td>
+        <td>{{ value[0] }}%</td>
+        <!-- Includes the links to pages of information of the job -->
         <td><a href= {{ value[1] }} >here</a></td>
       </tr>
       {% endfor %}

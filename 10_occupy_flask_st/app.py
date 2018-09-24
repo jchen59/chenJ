@@ -11,9 +11,9 @@ app = Flask(__name__)
 
 @app.route("/occupations")
 def occupation_table():
-    occu_dict = make_dictionary("data/occupations.csv")
+    occu_dict = make_dictionary("data/occupations.csv") # Creates a dictionary matching all the occupations and their percentages/links
     return render_template("chart.html",
-                           dict = occu_dict,
+                           dict = occu_dict,            # Passes in the dictionary and a randomly selected job
                            rand= random_job(occu_dict))
 
 if __name__ == "__main__":
