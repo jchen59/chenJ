@@ -8,15 +8,16 @@ from random import random
 def make_dictionary(fname):
     f = open(fname) # Opens the file
     lines = f.read().strip('\n').split('\n') # Makes a list of all the lines
+    f.close()
     dict = {}
     for name in lines[1:-1]:
         if name[0] == '"': # If there are quotations
             words = name.strip('"').split('"')
-            temp = words[1].strip(',').split(',')
-            dict[words[0]] = tuple(temp)
+            temp = words[1].strip(',').split(',') #a list with percentage and URL
+            dict[words[0]] = tuple(temp) #Converts list to a tuple and matches it with the key
         else: # If there are no quotations
             words = name.split(",")
-            dict[words[0]] = (words[1], words[2]) # Matches job titles with percentage
+            dict[words[0]] = (words[1], words[2]) # Matches job titles with a tuple containing percentage and URL
 
     return dict
 

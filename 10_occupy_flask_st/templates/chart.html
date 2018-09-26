@@ -4,45 +4,24 @@
   <head>
     <title>Occupations</title>
     <h1> Occupations in the United States </h1>
-    <!-- Formatting the table -->
-    <style>
-        table, th, td {
-           width: 75%;
-           margin: auto;
-        }
-        th, td{
-          border: 1px solid black;
-          text-align: center;
-          height: 30px;
-          font-size: 20px;
-        }
-        h1{
-          text-align: center;
-          color: blue;
-        }
-        h3{
-          border: 1px solid black;
-          width: 50%;
-        }
-    </style>
+    <h3> (These are the occupations and the percentage they constitute followed by a link to get started) </h3>
   </head>
 
   <body>
-    <center> <h3> Random Occupation: {{rand}}</h3> </center>
-    <center> <h4> A chart about occupations and the percent of people working in each respective field (courtesy of Mr. Brooks) </h4> </center>
-    <table>
+    <h3> Random Selected Occupation: {{rand}}</h3>
+    <table style="width:75%;">
       <tr>
-        <th>Job Class</th>
-        <th>Percentage</th>
-        <th>Start your career</th>
+        {% for heading in tab %}
+        <th>{{heading}}</th>
+        {% endfor %}
       </tr>
-      <!-- Loop through a sorted dictionary -->
-      {%  for key, value in dict|dictsort %}
+      <!-- iterate through the dictionary in key,value pair-->
+      {%  for key, value in dict|dictsort %} <!-- dictsort sorts the dictionary in alphabetical order
+      so that the keys come out in the same order everytime-->
       <tr>
         <td>{{ key }}</td>
-        <td>{{ value[0] }}%</td>
-        <!-- Includes the links to pages of information of the job -->
-        <td><a href= {{ value[1] }} >here</a></td>
+        <td>{{ value[0] }}%</td>    <!--Value is a tuple with the percentage at index 0 -->
+        <td><a href= {{ value[1] }} >here</a></td> <!--index 1 contains the URL-->
       </tr>
       {% endfor %}
     </table>
