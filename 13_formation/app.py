@@ -6,11 +6,9 @@ app = Flask(__name__)
 def hello_world():
     return render_template("basic_form.html")
 
-@app.route('/auth')
+@app.route('/auth', methods=["POST"])
 def auth():
-    if(request.args["username"] == ""):
-        return redirect("/")
-    return render_template("ya.html", name=request.args["username"],method = request.method)
+    return render_template("ya.html", name=request.form["username"],method = request.method)
 
 app.debug = 1
 app.run()
