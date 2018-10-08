@@ -1,4 +1,4 @@
-#CCC The Jinjas? - Jabir Chowdhury, Jiayang Chen, Peter Cwalina
+#Cool Cids Club - Jabir Chowdhury, Jiayang Chen, Peter Cwalina
 #SoftDev1 pd07
 #K17 - Average
 #2018-10-06
