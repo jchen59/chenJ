@@ -1,65 +1,73 @@
-#CCC The Jinjas? - Jabir Chowdhury, Jiayang Chen, Peter Cwalina
-#SoftDev1 pd07
-#K17 - Average
+#The Cool Cids Club
+#SofDev1 pd 7
+#K17 Average
 #2018-10-06
 
-import sqlite3   #enable control of an sqlite database
-import csv       #facilitates CSV I/O
+import sqlite3
 
-DB_FILE="data.db"
+DB_FILE = 'discobandit.db'
+db = sqlite3.connect(DB_FILE)
+c = db.cursor()
 
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-cur = db.cursor()               #facilitate db ops
-
-def read_files():
-	# Create and populate the courses table
-	with open('./data/courses.csv', newline='') as csvfile:
-		reader = csv.DictReader(csvfile)
-		c = "CREATE TABLE courses(code TEXT, mark INTEGER, id INTEGER)"
-		cur.execute(c)
-		for row in reader:
-			c = 'INSERT INTO courses VALUES(?,?,?)'
-			cur.execute(c,(row['code'],row['mark'],row['id']))
-
-	# Create and populate the peeps table
-	with open('./data/peeps.csv', newline='') as csvfile:
-		reader = csv.DictReader(csvfile)
-		c = "CREATE TABLE peeps(name TEXT, age INTEGER, id INTEGER)"
-		cur.execute(c)
-		for row in reader:
-			c = 'INSERT INTO peeps VALUES(?,?,?)'
-			cur.execute(c, (row['name'],row['age'],row['id']))
-	db.commit() #save changes
-
-def get_grades(id):
-	c = "SELECT mark FROM 'courses' WHERE courses.id = ?"
-	cur.execute(c,(id,))
-	grades = []
-	for grade in cur.fetchall():
-		grades += [grade[0]]
-	return grades
-
-def get_averages():
-	c = 'SELECT id FROM "peeps"'
-	cur.execute(c)
-	averages = {}
-	for name in cur.fetchall():
-		grades = get_grades(name[0])
-		averages[name[0]] = sum(grades)/len(grades)
-
-	return averages
-
-def make_table():
-	c = "CREATE TABLE peeps_avg(id INTEGER, average INTEGER)"
-	cur.execute(c)
-	averages = get_averages()
-	for grade in averages:
-		c = 'INSERT INTO peeps_avg VALUES(?,?)'
-		cur.execute(c, (grade,averages[grade]))
-read_files()
+#adds to courses make note if you put in id of someone not in peeps they will be unaccounted for in the avgs table
+def addToCourses(code, mark, id):
+    insertion = "INSERT INTO courses VALUES({},{},{})".format("'"+ code + "'", mark, id)
+    c.execute(insertion)  #add the values
 
 
-make_table()
-cur.execute("SELECT * FROM peeps_avg")
-print(cur.fetchall())
-db.close() #close database
+def tabulate_studentInfo():
+    command = "CREATE TABLE peeps_avg(id INTEGER PRIMARY KEY, average FLOAT);"
+    c.execute(command)
+    command = "SELECT peeps.id FROM peeps,courses WHERE peeps.id = courses.id;"
+    c.execute(command)
+    students_id = c.fetchall()
+    students_idset = set(students_id)  #transforms list with non-unique tuples into set with unique tuples
+    for tup in students_idset:
+        id = tup[0]
+        avg = calc_avg(id)
+        insertion = "INSERT INTO peeps_avg VALUES({},{})".format(id, avg)
+        c.execute(insertion)
+
+
+#prints all of the students data
+def display_studentsInfo():
+    command = "SELECT id,average FROM peeps_avg;"
+    c.execute(command)
+    data = c.fetchall()
+    for pair in data:
+        name = get_name(pair[0])
+        print("Name : {}    id: {}  average: {}\n".format(name,pair[0],pair[1]))
+
+
+#using id does the avg of the student
+def calc_avg(id):
+     grades = get_grades(id)
+     avg = 0.0
+     for item in grades:
+        avg+= item[0]
+     avg = format(avg/len(grades), '.2f')
+     return avg
+
+#takes a students id spits out their grades
+def get_grades(student_id):
+    command = "SELECT mark FROM courses WHERE courses.id = {};".format(student_id)
+    c.execute(command)
+    student_grades = c.fetchall()
+    return student_grades
+
+def get_name(student_id):
+    command = "SELECT name FROM peeps WHERE peeps.id = {};".format(student_id)
+    c.execute(command)
+    name = c.fetchone()
+    return name[0]  #name is a tuple so return first element
+
+
+tabulate_studentInfo()
+display_studentsInfo()
+addToCourses('calculus',85,11)
+
+c.execute('SELECT code,mark,id FROM courses')
+print(c.fetchall())
+
+db.commit()
+db.close()  #close database
