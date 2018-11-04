@@ -1,0 +1,26 @@
+body{
+    background-color: gray;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+h1{
+    text-align:center;
+    color:white;
+    background:darkgrey;
+}
+
+#navbar{
+    float:left;
+    width:200px;
+}
+a{
+    color:#cccccc;
+    font-weight:bold;
+    text-decoration:none;
+}
+.footer{
+    text-align:right;
+    color:lightgrey;
+    background:#555555;
+    padding:10px;
+}
