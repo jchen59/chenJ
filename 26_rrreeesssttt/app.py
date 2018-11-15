@@ -12,7 +12,7 @@ def hello_world():
     d1 = json.loads(darksky.read())
     weather = d1['currently']['summary']
     temp = d1['currently']['temperature']
-    return render_template("basic_form.html", activity = s, summary = weather + str(temp)))
+    return render_template("basic_form.html", activity = s, summary = weather + ' ' + str(temp) + 'F')
 
 app.debug = 1
 app.run()
