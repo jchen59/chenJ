@@ -1,6 +1,6 @@
 from flask import Flask,render_template
 
-import json,urllib
+import json,urllib,random
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,7 +12,12 @@ def hello_world():
     d1 = json.loads(darksky.read())
     weather = d1['currently']['summary']
     temp = d1['currently']['temperature']
-    return render_template("basic_form.html", activity = s, summary = weather + ' ' + str(temp) + 'F')
+
+    xkcd = urllib.request.urlopen('https://xkcd.com/{}/info.0.json'.format(random.randint(0,2000)))
+    d2 = json.loads(xkcd.read())
+    comic = d2['img']
+    alt = d2['alt']
+    return render_template("basic_form.html", activity = s, summary = weather + ' ' + str(temp) + 'F', comic = comic,alt=alt)
 
 app.debug = 1
 app.run()
