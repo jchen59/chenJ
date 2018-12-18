@@ -1,3 +1,8 @@
+Jiayang Chen, Rachel Ng
+SoftDev1 pd7
+K28 -- Sequential Progression
+2018-12-18
+
 var fibonacci = (n) => {
     var first = 0;
     var second = 1;
