@@ -1,6 +1,6 @@
 //Jiayang Chen, Jabir Chowdhury
 //SoftDev1 pd7
-//K29 -- Sequential Progression
+//K29 -- Sequential Progression II: Electric Boogaloo...
 //2018-12-19
 
 var fibonacci = (n) => {
@@ -34,7 +34,22 @@ var randomStudent = () => {
     return names[i];
 }
 
+document.getElementById('fibb').addEventListener("click" , function () {
+  var term = document.getElementById('fibid').value;
+  var retval = fibonacci(term);
+  document.getElementById("results").innerHTML = "fibonacci(" + term + ") is " + retval;
+});
 
-document.getElementById("fibb").addEventListener("click", fibonacci);
-document.getElementById("gcd").addEventListener("click", gcd);
-document.getElementById("random").addEventListener("click", randomStudent);
+
+document.getElementById('gcd').addEventListener("click" , function() {
+  var a = document.getElementById('a').value;
+  var b = document.getElementById('b').value;
+  var retval = gcd(a , b);
+  document.getElementById("gcd_results").innerHTML = "The gcd of " + a + " and " + b + " is " + retval;
+});
+
+
+document.getElementById('random').addEventListener("click" , function(){
+  var retval = randomStudent();
+  document.getElementById("rand").innerHTML = retval;
+});
